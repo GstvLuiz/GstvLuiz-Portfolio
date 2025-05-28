@@ -220,48 +220,24 @@ if (contactForm) {
         submitBtn.disabled = true;
         submitBtn.textContent = 'Enviando...';
         
-        // Simulate API call with timeout
-        setTimeout(() => {
-            // Reset form
-            contactForm.reset();
-            
-            // Show success message
-            alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
-            
-            // Reset button
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
-        }, 1500);
+        const serviceID = 'service_akmu13q'; 
+        const templateID = 'template_xisjba5'; 
         
-        // In a real application, you would send the form data to a server here
-        // Example with fetch API:
-        /*
-        fetch('your-api-endpoint', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name,
-                email,
-                subject,
-                message
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            contactForm.reset();
-            alert('Mensagem enviada com sucesso!');
-        })
-        .catch(error => {
-            alert('Erro ao enviar mensagem. Por favor, tente novamente.');
-            console.error('Error:', error);
-        })
-        .finally(() => {
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
-        });
-        */
+        emailjs.sendForm(serviceID, templateID, this)
+            .then(() => {
+                
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+                alert('Mensagem enviada com sucesso! Logo mais eu respondo. 🚀');
+                contactForm.reset(); 
+            }, (err) => {
+                
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+                
+                alert(`Xiii, deu ruim! 😱 Ocorreu um erro: ${JSON.stringify(err)}. Tenta de novo?`);
+            });
+
     });
 }
 
